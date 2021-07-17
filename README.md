@@ -13,6 +13,7 @@ Listed below are all of the technologies used in this repo:
 - Node.js
 - Express
 - MySQL
+- Sequelize
 - Dotenv
 - Nodemon (dev dependency)
 
