@@ -3,7 +3,8 @@ const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
 
-router.get('/', (req, res) => {
+// Handles finding all the Categories
+router.get('/', async (req, res) => {
   try {
     // find all categories
     // be sure to include its associated Products
@@ -22,6 +23,7 @@ router.get('/', (req, res) => {
       res.status(404).json({
         message: 'No matching Categories found'
       })
+      return
     } else {
 
       // Successful response
@@ -34,13 +36,43 @@ router.get('/', (req, res) => {
   }
 });
 
+// Handles finding a category by id
+router.get('/:id', async (req, res) => {
+  try {
+    // find one category by its `id` value
+    // be sure to include its associated Products
+    const category = await Category.findOne( req.params.id, {
+      include: {
+        model: Product,
+      },
+      attributes: [
+        'id',
+        'product_name',
+        'price',
+        'stock',
+        'category_id'
+      ]
+    })
 
+    // If there is no matching Category
+    if (!category){
+      res.status(404).json({
+        message: 'No matching Category found'
+      })
+      return
+    } else {
 
-router.get('/:id', (req, res) => {
-  // find one category by its `id` value
-  // be sure to include its associated Products
+      // Successful response
+      res.status(200).json(category)
+    }
+  } catch (err) {
+
+    // Error response
+    res.status(500).json(err)
+  }
 });
 
+// 
 router.post('/', (req, res) => {
   // create a new category
 });

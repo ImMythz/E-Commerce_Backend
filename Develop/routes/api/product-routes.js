@@ -60,10 +60,12 @@ router.get('/:id', async (req, res) => {
       res.status(404).json({
         message: 'No product with mathcing id'
       })
-    }
-
-    // Successful response
+      return
+    } else {
+      
+      // Successful response
     res.status(200).json(product)
+    }
   } catch (err) {
 
     // Error response
