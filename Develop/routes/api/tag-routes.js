@@ -3,9 +3,10 @@ const { Tag, Product, ProductTag } = require('../../models');
 
 // The `/api/tags` endpoint
 
+// Handles finding all Tags
 router.get('/', async (req, res) => {
   try {
-    // find all tags
+    // Find all Tags
     // be sure to include its associated Product data
     const getTags = await Tag.findAll({
       include: {
@@ -17,6 +18,7 @@ router.get('/', async (req, res) => {
       ]
     })
 
+    // If no Tags are found
     if (!getTags){
       res.status(404).json({
         message: 'No matching Tags found'
@@ -34,9 +36,33 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
+// Handles getting a Tag by id
+router.get('/:id', async (req, res) => {
+  try {
+    // find a single tag by its `id`
+    // be sure to include its associated Product data
+    const tag = await Tag.findByPk(req.params.id, {
+      include: {
+        model: Product,
+      },
+    })
+
+    // If Tag cannot be found
+    if (!getTags){
+      res.status(404).json({
+        message: 'No matching Tags found'
+      })
+      return
+    } else {
+
+      // Successful response
+      res.status(200).json(getTags)
+    }
+  } catch (err) {
+    
+    // Error response
+    res.status(500).json(err)
+  }
 });
 
 router.post('/', (req, res) => {
