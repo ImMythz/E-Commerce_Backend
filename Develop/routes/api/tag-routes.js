@@ -82,9 +82,31 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Handles updating a Tag
+router.put('/:id', async (req, res) => {
+  try {
+    // update a tag's name by its `id` value
+    const updateTag = await Tag.update(req.body, {
+      where: {
+        id: req.params.id
+      }
+    })
 
-router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
+    if (!updateTag){
+      res.status(404).json({
+        message: 'No matching Tag found'
+      })
+      return
+    } else {
+
+      // Successful response
+      res.status(200).json(updateTag)
+    }
+  } catch (err) {
+
+    // Error response
+    res.status(500).json(err)
+  }
 });
 
 router.delete('/:id', (req, res) => {
