@@ -14,25 +14,25 @@ Product.init(
       type: DataTypes.INTEGER,
       allowNull: false, 
       primaryKey: true, 
-      autoIncrement: true
+      autoIncrement: true,
     },
     product_name: {
       type: DataTypes.STRING, 
-      allowNull: false
+      allowNull: false,
     },
     price: {
       type: DataTypes.DECIMAL,
       allowNull: false, 
       validate: {
-        isDecimal: true
+        isDecimal: true,
       }
     },
     stock: {
       type: DataTypes.INTEGER,
       allowNull: false, 
-      defaultValue: 10, 
+      defaultValue: 10 , 
       validate: {
-        isNumeric: true
+        isNumeric: true,
       }
     },
     category_id: {
@@ -40,7 +40,7 @@ Product.init(
       references: {
         model: 'category',
         key: 'id',
-        unique: false
+        unique: false,
       }
     }
   },
@@ -53,4 +53,5 @@ Product.init(
   }
 );
 
+// Exports the Product model which allows us to use this throughout our project
 module.exports = Product;
