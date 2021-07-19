@@ -48,15 +48,15 @@ router.get('/:id', async (req, res) => {
     })
 
     // If Tag cannot be found
-    if (!getTags){
+    if (!tag){
       res.status(404).json({
-        message: 'No matching Tags found'
+        message: 'No matching Tag found'
       })
       return
     } else {
 
       // Successful response
-      res.status(200).json(getTags)
+      res.status(200).json(tag)
     }
   } catch (err) {
     
@@ -65,9 +65,23 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
-  // create a new tag
+// Handles creating a new Tag
+router.post('/', async (req, res) => {
+  try {
+    // create a new tag
+    const newTag = await Tag.create({
+      tag_name: req.body.tag_name
+    })
+
+    // Successful response
+    res.status(200).json(newTag)
+  } catch (err) {
+
+    // Error response
+    res.status(500).json(err)
+  }
 });
+
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
