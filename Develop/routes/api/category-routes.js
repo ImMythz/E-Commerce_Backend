@@ -76,7 +76,9 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     // create a new category
-    const newCategory = await Category.create(req.body)
+    const newCategory = await Category.create({
+      category_name: req.body.category_name
+    })
 
     // Successful response
     res.status(200).json(newCategory)
@@ -87,9 +89,31 @@ router.post('/', async (req, res) => {
   }
 });
 
-
+// Handles updating a Category
 router.put('/:id', (req, res) => {
-  // update a category by its `id` value
+  try {
+    // update a category by its `id` value
+    const updateCategory = await Category.update(req.body, {
+      where: {
+        id: req.params.id
+      }
+    })
+
+    if (!updateCategory){
+      res.status(404).json({
+        message: 'No matching Category found'
+      })
+      return
+    } else {
+
+      // Successful response
+      res.status(200).json(updateCategory)
+    }
+  } catch (err) {
+
+    // Error response
+    res.status(500).json(err)
+  }
 });
 
 router.delete('/:id', (req, res) => {
