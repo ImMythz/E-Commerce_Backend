@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
       },
       attributes: [
         'id',
-        'category_id'
+        'category_name'
       ]
     })
 
@@ -41,17 +41,10 @@ router.get('/:id', async (req, res) => {
   try {
     // find one category by its `id` value
     // be sure to include its associated Products
-    const category = await Category.findOne( req.params.id, {
+    const category = await Category.findByPk( req.params.id, {
       include: {
         model: Product,
       },
-      attributes: [
-        'id',
-        'product_name',
-        'price',
-        'stock',
-        'category_id'
-      ]
     })
 
     // If there is no matching Category
@@ -120,20 +113,23 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     // delete a category by its `id` value
-    const [affectedRows] = await Category.destroy({
+    const removeCategory = await Category.destroy({
       where: {
         id: req.params.id,
       }
     })
 
     // Successful response
-    if (affectedRows < 0){
-      res.status(200).end()
+    if (!removeCategory){
+      res.status(404).json({
+        message: 'No matching Category found'
+      })
+      return
     } else {
-      res.status(404).end()
+      res.status(200).json(removeCategory)
     }
   } catch (err) {
-    
+
     // Error response 
     res.status(500).json(err)
   }

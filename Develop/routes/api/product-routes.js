@@ -62,7 +62,7 @@ router.get('/:id', async (req, res) => {
       })
       return
     } else {
-      
+
       // Successful response
     res.status(200).json(product)
     }
@@ -151,17 +151,20 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     // delete one product by its `id` value
-    const [affectedRows] = await Product.destroy({
+    const removeProduct = await Product.destroy({
       where: {
         id: req.params.id,
       }
     })
 
     // Successful response
-    if (affectedRows < 0){
-      res.status(200).end()
+    if (!removeProduct){
+      res.status(404).json({
+        message: 'No matching Product found'
+      })
+      return
     } else {
-      res.status(404).end()
+      res.status(200).json(removeProduct)
     }
   } catch (err) {
     // Error response 
