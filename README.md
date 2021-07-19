@@ -16,6 +16,7 @@ Listed below are all of the technologies used in this repo:
 - Sequelize
 - Dotenv
 - Nodemon (dev dependency)
+- Insomnia (testing program)
 
 ## Setup
 1. Open GitBash
@@ -25,16 +26,44 @@ Listed below are all of the technologies used in this repo:
   
 3. Then open the repository in your code editor of choice (ex: VSCode)
 
-4. Then open the <i>Terminal</i> and run the following command to install all dependencies
+4. Then open the <i>Terminal</i> and run the following command to change directories
+
+  `$ cd Develop/`
+
+5. Then open the <i>Terminal</i> and run the following command to install all dependencies
 
   `$ npm i`
-  
-5. Then run this command to start the application
 
-  `$ npm start`
+6. Then you will run the open the .env.EXAMPLE file which looks like the screenshot below and enter your credentials and rename the file to .env
+
+<img src='Assets\EC-screenshot-1.png' alt='E-Commerce Sceenhot One'>
+
+7. Then open the <i>Terminal</i> and run the following command. This will prompt the user to enter their password. 
+
+  `$ mysql -u root -p`
+
+8. Then run the following command to exit sql. 
+
+  `\q`
+
+9. Then run the following command to seed the database
+
+  `npm run seed`
+  
+10. Then run this command to start the application
+
+  `$ npm run watch`
+
+11. Finally launch Insomnia, create a request collection, and create new POST, PUT, GET, and DELETE routes for products, categories and tags.
+
+The user will be able to view, create, update and delete data from the database.
+
+<img src='Assets\EC-screenshot-2.png' alt='E-Commerce Sceenhot Two'>
 
 ## Usage
+This application will allow the user to interact with an E-Commerce Backend. This will allow the user to add new products, categories, and tags. As well as update and delete those as well. 
 
+Click the image below to play a video demo of this application
 
 ## License
 MIT License
